@@ -8,23 +8,29 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       justifyContent: 'space-around',
     },
-    actionTouchable: {
-      flexGrow: 0,
-    },
-    actionText: {
-      textDecorationLine: 'underline',
-    },
-  });
+});
 
-  const ItemFooter = ({ item }) => {
+const FooterNumbers = ({ header, number }) => {
+    if (number >= 1000) {
+        number = Math.round(number / 1000 * 10) / 10 + "k";
+    }
     return (
-      <View style={styles.container}>
-        <Text>Stars: {item.stargazersCount}</Text>
-        <Text>Forks: {item.forksCount}</Text>
-        <Text>Reviews: {item.reviewCount}</Text>
-        <Text>Rating: {item.ratingAverage}</Text>
+      <View style={{ alignItems: 'center', paddingBottom: 10 }}>
+        <Text fontWeight="bold">{number}</Text>
+        <Text color="textSecondary" style={{ paddingTop: 5 }}>{header}</Text>
       </View>
     );
-  };
+};
 
-  export default ItemFooter;
+const ItemFooter = ({ item }) => {
+    return (
+      <View style={styles.container}>
+        <FooterNumbers header='Stars' number={item.stargazersCount}/>
+        <FooterNumbers header='Forks' number={item.forksCount}/>
+        <FooterNumbers header='Reviews' number={item.reviewCount}/>
+        <FooterNumbers header='Rating' number={item.ratingAverage}/>
+      </View>
+    );
+};
+
+export default ItemFooter;
