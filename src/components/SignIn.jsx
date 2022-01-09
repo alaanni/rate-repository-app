@@ -6,6 +6,7 @@ import theme from '../theme';
 import { View, Pressable, StyleSheet} from 'react-native';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSingIn';
+import { useHistory } from 'react-router-native';
 
 
 const validationSchema = yup.object().shape({
@@ -61,6 +62,8 @@ const SignInContainer = ({ onSubmit }) => {
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const history = useHistory();
+
     const onSubmit = async (values) => {
         console.log(values);
         const { username, password } = values;
@@ -68,6 +71,8 @@ const SignIn = () => {
         try {
           const { data } = await signIn({ username, password });
           console.log(data);
+          history.push("/");
+          
         } catch (e) {
           console.log(e);
         }
